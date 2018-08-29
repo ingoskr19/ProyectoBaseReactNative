@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, SectionList, StyleSheet } from 'react-native';
+import {Platform, View, Text, SectionList, StyleSheet } from 'react-native';
 
 import ItemContact from './../Contacts/components/item-contact';
+import CustomText from './components/custom-text';
 
 class Diary extends Component {
     constructor(props) {
@@ -53,6 +54,8 @@ class Diary extends Component {
     render() {
         return (
             <View>
+                <CustomText/>
+                
                 <SectionList
                     renderItem={this.renderItem}
                     renderSectionHeader={this.sectionHeader}
@@ -79,9 +82,18 @@ class Diary extends Component {
 }
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: Platform.OS == 'IOS' ? '#5dba5e' : '#2c6087',
-        padding: 4,
-        margin: 5,
+        backgroundColor: Platform.OS == 'IOS' ? '#2c6087': '#5dba5e',
+        marginBottom: 5,
+        ...Platform.select({
+            ios: {
+                paddingVertical: 5,
+            }, 
+            android: {
+                paddingVertical: 15,
+                marginBottom: 15,
+                alignItems: 'center',
+            }
+        })
     }
 });
 
