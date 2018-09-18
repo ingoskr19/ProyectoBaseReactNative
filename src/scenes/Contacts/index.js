@@ -12,7 +12,6 @@ import ItemSeparator from './components/item-separator';
 
 class Contacts extends Component {
 
-
     constructor(props) {
         super(props);
         this.state = {
