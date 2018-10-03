@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, AsyncStorage } from 'react-native';
 import ItemMenuNav from './components/item-menu-nav';
+import { Button } from 'react-native-vector-icons/dist/FontAwesome';
 
 class SideMenu extends Component {
 
@@ -53,6 +54,11 @@ class SideMenu extends Component {
         );
     }
 
+    singOut = async () => {
+        await AsyncStorage.removeItem('token');
+        this.props.navigation.navigate('Auth');
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -72,14 +78,15 @@ class SideMenu extends Component {
                     <ItemMenuNav navigation={this.props.navigation} 
                     goTo="Bagful"
                     text="go to Cart"
-                    icon="cart"
+                    icon="glass"
                     />
                     
                     {/*
-                    <ItemMenuNav navigation={this.props.navigation} item={this.state.itemList(0)} />
+                    <ItemMenuNav navigation={this.props.navigation} item={this.state.itemList[0]} />
                     */}
                 </ScrollView>
                 <View style={styles.footerContainer}>
+                    <Button style={styles.singOut} title='Sign out' onPress={this.singOut}/>
                     <Text style={styles.footerText}>Power by ETN</Text>
                 </View>
             </View>
@@ -95,10 +102,13 @@ const styles = StyleSheet.create({
     },
     footerContainer: {
         padding: 15,
-        marginBottom: 20,
+        marginBottom: 40,
     },
     footerText: {
         fontSize: 18,
+    },
+    singOut:{
+        color: '#fff',
     }
 });
 

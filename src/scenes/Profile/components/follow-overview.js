@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native'
-
+import i18n from './../../../i18n';
 const FollowOverview = props => (
     <View style={styles.followContainer}>
         <View style={styles.followWrapper}>
             <Text style={styles.followValue}> {props.followers} </Text>
-            <Text style={styles.followTitle}> Followers </Text>
+            <Text style={styles.followTitle}> {i18n.t('FOLLOWERS')} </Text>
         </View >
         <View style={styles.followWrapper}>
             <Text style={styles.followValue}> {props.following} </Text>
-            <Text style={styles.followTitle}> Followings </Text>
+            <Text style={styles.followTitle}> {i18n.t('FOLLOWINGS')} </Text>
         </View >
     </View >
 )

@@ -11,7 +11,6 @@ class HttpBase {
             const data = await query.json();
             return data;
         } catch(err){
-            console.log(err);//TODO
             throw new Error(err);
         }
     }
@@ -22,10 +21,11 @@ class HttpBase {
                 method: 'GET',
                 headers: this.headerConfig(config.headers),
             }
-
-            url = this.buildUrlWithParams(url,config.params);
-
-            let query = await this.callHttp(url,options);
+            const parameters = this.buildParams(config.params);
+            const _url = `${url}${parameters}`;
+            let query = await this.callHttp(_url,options);
+            console.warn('query:::');
+            console.warn(query);
             const data = await query.json();
             return data;
         } catch(err){
@@ -44,6 +44,9 @@ class HttpBase {
     }
 
     callHttp(url, options){
+        console.warn('_url:'+url);
+        console.warn('options::::');
+        console.warn(options);
         let promise = new Promise((resolve, reject ) => {
             fetch(url, options)
             .then(response => resolve(response))
@@ -53,15 +56,15 @@ class HttpBase {
         return promise;
     }
 
-    buildUrlWithParams(url, params){
+    buildParams(params){
         let param = [];
             if(params){
                 for(let [key,value] of Object.entries(params)){
                     param.push(key+'='+value);
                 }
-                url = url + '/'+ param.join('&');
+                return '?'+ param.join('&');
             }
-        return url;
+        return '';
     }
 }
 

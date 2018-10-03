@@ -1,5 +1,5 @@
 import React from 'react';
-import {StackNavigator, DrawerNavigator} from 'react-navigation';
+import {StackNavigator, DrawerNavigator, createSwitchNavigator} from 'react-navigation';
 
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 
@@ -19,8 +19,17 @@ import Tab1 from './../BagFul/components/tab1';
 import Tab2 from './../BagFul/components/tab2';
 import Tab3 from './../BagFul/components/tab3';
 import SideMenu from './../Menu/side-menu';
+import Auth from '../login/auth';
+import AuthLoading from '../login/auth-loading';
+import Player from '../Player';
 
-export const ProfileNavigator = StackNavigator({
+ const ProfileNavigator = StackNavigator({
+  CategoriesScreen: {
+    screen: Categories,
+    navigationOptions: () => ({
+      title: 'Categories'
+    })
+  },
   ProfileScreen: {
     screen: Profile,
     navigationOptions: () => ({
@@ -41,9 +50,15 @@ export const ProfileNavigator = StackNavigator({
     navigationOptions: () => ({
       title: 'Diary'
     })
+  },
+  PlayerScreen: {
+    screen: Player,
+    navigationOptions: () => ({
+      title: 'Player'
+    })
   }
 }, {
-  initialRouteName: 'CategoriesScreen',
+  initialRouteName: 'PlayerScreen',
   headerStyle: {
     backgroundColor: '#7B1FA2',
     borderBottomColor: '#7B1FA2'
@@ -54,7 +69,7 @@ export const ProfileNavigator = StackNavigator({
   headerTintColor: '#7B1FA2',
 });
 
-export const BagFulNavigator = StackNavigator({
+ const BagFulNavigator = StackNavigator({
   BagFulScreen: {
     screen: BagFul,
     navigationOptions: () => ({
@@ -76,7 +91,7 @@ export const BagFulNavigator = StackNavigator({
   headerTintColor: '#7B1FA2',
 });
 
-export const ProductsNavigator = StackNavigator({
+ const ProductsNavigator = StackNavigator({
   CategoriesScreen: {
     screen: Categories,
     navigationOptions: () => ({
@@ -141,7 +156,7 @@ export const ProductsNavigator = StackNavigator({
 );
 
 const iconTab1 = (<Icon name="anchor" size={24} color="#999" />)
-export const Tabs = createBottomTabNavigator({
+ const Tabs = createBottomTabNavigator({
     Tab1: {
       screen: Tab1,
       navigationOptions: {
@@ -175,7 +190,7 @@ export const Tabs = createBottomTabNavigator({
   }
 });
 
-export const Drawer = DrawerNavigator({
+const Drawer = DrawerNavigator({
     Products: { screen: ProductsNavigator},
     BagFul: { screen: Catalog},
     Profile: { screen: Tabs},
@@ -189,3 +204,11 @@ export const Drawer = DrawerNavigator({
 );
 
 
+export const Splash = createSwitchNavigator({
+  Auth: Auth,
+  AuthLoading: AuthLoading,
+  App: Drawer,
+  Profile: ProfileNavigator
+},{
+  initialRouteName: 'Profile',
+});

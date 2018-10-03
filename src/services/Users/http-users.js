@@ -3,6 +3,17 @@ import httpBase from '../http-base';
 
 
 class HttpUser {
+
+    async getLogin (config){
+        try{
+            const url = `${ API_BASE }${HTTP_USER.getLogin}`;
+            const data = await httpBase.baseGet(url,config);
+            return data;
+        } catch (error) {
+            console.log('Error en getLogin()');
+            console.log(error);//TODO
+        }
+    }
     async getUsers (){
         try{
             const url = `${ API_BASE }${HTTP_USER.getUsers}`;
@@ -13,10 +24,9 @@ class HttpUser {
         }
     }
 
-    async getUserByToken(){
+    async getUserByToken(token){
         try{
             const url = `${ API_BASE }${HTTP_USER.getUser}`;
-            let token = 'dftg3Wdwlm1QpA06dewWfS1';
             const config = {
                 headers: {
                     Authorization: `Bearer: ${token}`
