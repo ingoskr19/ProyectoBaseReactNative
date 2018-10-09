@@ -24,8 +24,6 @@ class HttpBase {
             const parameters = this.buildParams(config.params);
             const _url = `${url}${parameters}`;
             let query = await this.callHttp(_url,options);
-            console.warn('query:::');
-            console.warn(query);
             const data = await query.json();
             return data;
         } catch(err){
@@ -44,9 +42,6 @@ class HttpBase {
     }
 
     callHttp(url, options){
-        console.warn('_url:'+url);
-        console.warn('options::::');
-        console.warn(options);
         let promise = new Promise((resolve, reject ) => {
             fetch(url, options)
             .then(response => resolve(response))

@@ -2,12 +2,11 @@ import React from 'react';
 import { Text, TouchableHighlight } from 'react-native';
 
 const ProgressBar = props => (
-    <TouchableHighlight
-        onPress={props.onPress}>
-        {
-            props.pause ? <Text>Play</Text> : <Text>Pause</Text>
-        }
-    </TouchableHighlight>
+    <view>
+        <View>
+            
+        </View>
+    </view>
 );
 
 export default ProgressBar;

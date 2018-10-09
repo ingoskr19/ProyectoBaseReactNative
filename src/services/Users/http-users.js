@@ -8,10 +8,9 @@ class HttpUser {
         try{
             const url = `${ API_BASE }${HTTP_USER.getLogin}`;
             const data = await httpBase.baseGet(url,config);
-            return data;
+            return data.token;
         } catch (error) {
-            console.log('Error en getLogin()');
-            console.log(error);//TODO
+            console.warn(error);//TODO
         }
     }
     async getUsers (){
@@ -20,7 +19,7 @@ class HttpUser {
             const data = await httpBase.baseGet(url,{});
             return data;
         } catch (error) {
-            console.log(error);//TODO
+            console.warn(error);//TODO
         }
     }
 
@@ -35,7 +34,7 @@ class HttpUser {
             const data = await httpBase.baseGet(url,config);
             return data;
         } catch (error) {
-            console.log(error);
+            console.warn(error);
         }
     }
 }

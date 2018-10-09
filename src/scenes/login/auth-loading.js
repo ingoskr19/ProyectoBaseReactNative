@@ -11,7 +11,6 @@ class AuthLoading extends Component {
 
   async login (){
     const userToken = await AsyncStorage.getItem('token');
-    console.warn('ya tengo el token:::: '+userToken);
       setTimeout(()=>{
           this.props.navigation.navigate((userToken)?'App':'Auth');
       },2000);

@@ -15,6 +15,16 @@ class Auth extends Component {
         email: '',
         password: ''
     });
+    this.init();
+  }
+
+  async init (){
+    const _email = await AsyncStorage.getItem('email');
+    if(_email){
+        this.setState({
+            email: _email
+        });
+    }
   }
 
   login = async () => {
@@ -24,22 +34,10 @@ class Auth extends Component {
           'password':this.state.password
       }
     }
-    await AsyncStorage.setItem('email',this.email);
     const token = await HttpUser.getLogin(config);
     await AsyncStorage.setItem('token',token);
+    await AsyncStorage.setItem('email',this.state.email);
     this.props.navigation.navigate('App');
-  }
-
-  onChangeText = (_input,text) => {
-    if(_input === 'email'){
-            this.setState({
-                'email': text
-            });
-    } else if(_input === 'password'){
-            this.setState({
-                'password': text
-            });
-    }
   }
   render() {
     return (
@@ -49,14 +47,14 @@ class Auth extends Component {
             placeholder="Email"
             style={styles.formInput}
             value={this.state.email}
-            onChangeText={(text)=>this.onChangeText('email',text)}
+            onChangeText={(text)=>this.setState({email:text})}
         />
         <Text style={styles.formLabel}> Password </Text>
         <TextInput
             placeholder="Password"
             style={styles.formInput}
             value={this.state.password}
-            onChangeText={(text)=>this.onChangeText('password',text)}
+            onChangeText={(text)=>this.setState({password:text})}
         />
         <Button style ={styles.login}
             title="Login"

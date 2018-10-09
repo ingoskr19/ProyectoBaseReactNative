@@ -22,6 +22,7 @@ import SideMenu from './../Menu/side-menu';
 import Auth from '../login/auth';
 import AuthLoading from '../login/auth-loading';
 import Player from '../Player';
+import { Localization } from '../geolocalization';
 
  const ProfileNavigator = StackNavigator({
   CategoriesScreen: {
@@ -55,6 +56,12 @@ import Player from '../Player';
     screen: Player,
     navigationOptions: () => ({
       title: 'Player'
+    })
+  },
+  LocalizationScreen: {
+    screen: Localization,
+    navigationOptions: () => ({
+      title: 'Localization'
     })
   }
 }, {
@@ -210,5 +217,5 @@ export const Splash = createSwitchNavigator({
   App: Drawer,
   Profile: ProfileNavigator
 },{
-  initialRouteName: 'Profile',
+  initialRouteName: 'AuthLoading',
 });
