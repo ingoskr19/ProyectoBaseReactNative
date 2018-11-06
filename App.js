@@ -3,7 +3,7 @@ import {
   Platform,
   ToastAndroid
 } from 'react-native';
-import { Splash } from './src/scenes/Navigation/navigation';
+import {Splash} from './src/navigation/navigator';
 import RNLanguage from 'react-native-languages';
 import i18n from './src/i18n';
 //import AppNavigator from './navigation';

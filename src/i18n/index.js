@@ -6,7 +6,9 @@ import en from './lang/en.json';
 
 i18n.locale=RNLanguages.language;
 i18n.fallbacks=true;
-//i18n.defaultLocale='es';
-i18n.translate = {en, es};
+//i18n.defaultSeparator = '.';
+//i18n.tranlate = {es,en};
+i18n.defaultLocale='es';
+i18n.translations = {'es':es,'en':en};
 
 export default i18n;

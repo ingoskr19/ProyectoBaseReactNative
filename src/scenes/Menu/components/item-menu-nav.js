@@ -1,22 +1,19 @@
 import React from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import { Text} from 'react-native';
+import {Icon, ListItem, Left, Right} from 'native-base';
 
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import itemMenuNavStyle from './styles/item-menu-nav-style';
 const ItemMenuNav = props => (
-    <TouchableHighlight
-        onPress={() => {console.log(props.goTo);props.navigation.navigate(props.goTo)}}
-        underlayColor="#198e97"
+    <ListItem button
+        onPress={() => props.navigation.navigate(props.item.screen)}
     >
-    <View style={itemMenuNavStyle.container}>
-            <View style={itemMenuNavStyle.iconContent}>
-                <Icon name={props.icon} size={24} color="#999" />
-            </View>
-            <View style={itemMenuNavStyle.textContent}>
-                <Text style={itemMenuNavStyle.itemText}>{props.text}</Text>
-            </View>
-        </View>
-    </TouchableHighlight>
+        <Left>
+            <Icon active name={props.item.icon} />
+            <Text>{props.item.title}</Text>
+        </Left>
+        <Right>
+            <Icon name="arrow-forward" />
+        </Right>
+    </ListItem>
 );
 
 export default ItemMenuNav;

@@ -1,57 +1,70 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
+import { Left, Right, Content, Textarea, Card, CardItem, Body, Text, Container, Item } from 'native-base';
+renderImage = (image) => {
+    if (image != "" && image != null) {
+        return (<Image source={{ uri: image }} style={styles.productImage} />);
+    } else {
+        <Image source={require('./../../../../assets/images/NoImage.png')} style={styles.productImage} />
+    }
+}
 
-const ItemProduct = (props) => (
-    <TouchableHighlight
-        onPress={() => {props.navigation.navigate('ProductDetailScreen', { _id: props.product._id })}}
-        underlayColor="#C0C0C0"
-    >
-        <View>
-            <View style={styles.container}>
-                <Image source={{ uri: props.product.avatar }} style={styles.productImage}/>
-                <Text style={styles.productName}>{props.product.name}</Text>
-                <View style={styles.productFooter}>
-                <Text style={styles.productPrice}>${props.product.price}</Text>
-                    <Image style={styles.productFavorite} 
-                    source={(props.product.favorite == 'true') ? 
-                    require('../../../img/heart_filled.png') :
-                    require('../../../img/heart.png') }/>
-                </View>
-            </View>
-        </View>
-    </TouchableHighlight>
-);
+onPress = (props) => {
+    console.log("eentro aqui::");
+    console.log(props.product);
+    props.navigation.navigate('ProductDetailScreen', { _id: props.product._id });
+}
+const ItemProduct = (props) => {
+    return (
+        <Content>
+            <Card>
+                <CardItem header>
+                    <Text style={styles.productName}>{props.product.name}</Text>
+                </CardItem>
+                <CardItem>
+                    <Body>
+                        <View style={styles.bodyContent}>
+                            <Left>
+                                {renderImage(props.product.avatar)}
+                            </Left>
+                            <Text style={styles.productDescription}>
+                                {props.product.description}
+                            </Text>
+                        </View>
+                    </Body>
+                </CardItem>
+                <CardItem footer>
+                    <Left>
+                        <Text style={styles.productPrice}>${props.product.price}</Text>
+                    </Left>
+                    <Right>
+                        <Text>{props.product.favorite}</Text>
+                    </Right>
+                </CardItem>
+            </Card>
+        </Content>
+    );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        height: 250,
-        alignContent: 'space-around',
-        backgroundColor: '#fff',
-        marginBottom: 2,
-    },
     productName: {
         backgroundColor: '#fff',
-        fontSize: 20,
-        flex: 1
+        fontSize: 12,
     },
     productImage: {
-        flex: 3,
-        marginTop: 10,
-        width: 190,
-        alignSelf: 'center',
+        width: 70,
+        height: 70,
+        resizeMode: 'contain'
     },
-    productFooter: {
-        flex: 1,
+    bodyContent: {
         flexDirection: 'row',
-        alignContent: 'space-between',
-        padding: 5,
+    },
+    productDescription: {
+        fontSize: 12
     },
     productPrice: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
-        flex: 1,
     },
     productFavorite: {
         width: 16,

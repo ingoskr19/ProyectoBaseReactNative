@@ -1,18 +1,21 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native'
 import i18n from './../../../i18n';
-const FollowOverview = props => (
-    <View style={styles.followContainer}>
+const FollowOverview = props => {
+    console.log('I18N:::::::::::');
+    console.log(i18n);
+    return (<View style={styles.followContainer}>
         <View style={styles.followWrapper}>
             <Text style={styles.followValue}> {props.followers} </Text>
-            <Text style={styles.followTitle}> {i18n.t('FOLLOWERS')} </Text>
-        </View >
+            <Text style={styles.followTitle}> {i18n.t('FOLLOWERS')} </Text> 
+        </View>
         <View style={styles.followWrapper}>
-            <Text style={styles.followValue}> {props.following} </Text>
+            <Text style={styles.followValue}> {props.followings} </Text>
             <Text style={styles.followTitle}> {i18n.t('FOLLOWINGS')} </Text>
-        </View >
+        </View>
     </View >
-)
+);
+}
 
 const styles = StyleSheet.create({ 
     followContainer:{

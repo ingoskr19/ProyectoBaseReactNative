@@ -1,115 +1,132 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, AsyncStorage } from 'react-native';
+import React, { Component } from 'react'
+import { StyleSheet, AsyncStorage } from 'react-native'
+import { Container, Content, List, Icon, Right, Text, View, Item } from 'native-base';
+import LinearGradient from 'react-native-linear-gradient';
+import httpUsers from '../../services/Users/http-users';
+
 import ItemMenuNav from './components/item-menu-nav';
-import { Button } from 'react-native-vector-icons/dist/FontAwesome';
+import HeaderMenu from './../Components/Menu/header-menu';
+
+const routes = [
+    {
+        screen: 'Products',
+        title: 'Products',
+        icon: 'apps'
+    },
+    {
+        screen: 'LoginStack',
+        title: 'Login',
+        icon: 'person'
+    },
+    {
+        screen: 'DevicesSwitch',
+        title: 'Devices',
+        icon: 'cube'
+    },
+    {
+        screen: 'ReduxScene',
+        title: 'Redux Implementation',
+        icon: 'git-network'
+    }
+];
 
 class SideMenu extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            itemList: [],
-            separatorList: []
+            user: [],
         };
     }
 
-    componentDidMount = () => {
-        const items = [
-            {
-                goTo: 'CategoriesScreen',
-                text: 'Categories',
-                icon: 'home',
-                iconColor: '#c0c0c0'
-            },
-            {
-                goTo: 'Tabs',
-                text: 'Tabs',
-                icon: 'home',
-                iconColor: '#ff24ee'
-            },
-            {
-                goTo: 'Bagful',
-                text: 'go to Cart',
-                icon: 'home',
-                iconColor: '#f1f1f1'
-            },
-        ];
-
-        const separators = [
-            {
-                goTo: '',
-                name: 'Juan Perez',
-            },
-        ];
-
-        this.setState({
-            itemList: items,
-            separatorList: separators,
-        });
+    componentDidMount = async () => {
+        this.getUserByToken();
     }
 
-    getItem(index) {
-        return (
-           this.itemList[index]
-        );
+    async getUserByToken() {
+        const token = await AsyncStorage.getItem('token');
+        const data = await httpUsers.getUserByToken(token);
+        this.setState({
+            user: data
+        });
     }
 
     singOut = async () => {
         await AsyncStorage.removeItem('token');
-        this.props.navigation.navigate('Auth');
+        this.props.navigation.navigate('AuthLoading');
     }
-
     render() {
         return (
-            <View style={styles.container}>
+            <Container>
+                <Content>
+                    
+                    <HeaderMenu user={this.state.user} navigation={this.props.navigation}/>
+                    
+                    <List style={styles.list}
+                        dataArray={routes}
+                        renderRow={item => {
+                            return (
+                                <ItemMenuNav item={item} navigation={this.props.navigation} />
+                            );
+                        }}
+                    />
+                </Content>
 
-                <ScrollView>
-                    
-                    <ItemMenuNav navigation={this.props.navigation} 
-                    goTo="CategoriesScreen"
-                    text="Products"
-                    icon="home"
-                    />
-                    <ItemMenuNav navigation={this.props.navigation} 
-                    goTo="Tabs"
-                    text="Tabs"
-                    icon="home"
-                    />
-                    <ItemMenuNav navigation={this.props.navigation} 
-                    goTo="Bagful"
-                    text="go to Cart"
-                    icon="glass"
-                    />
-                    
-                    {/*
-                    <ItemMenuNav navigation={this.props.navigation} item={this.state.itemList[0]} />
-                    */}
-                </ScrollView>
-                <View style={styles.footerContainer}>
-                    <Button style={styles.singOut} title='Sign out' onPress={this.singOut}/>
-                    <Text style={styles.footerText}>Power by ETN</Text>
+                <View style={styles.footer}>
+                    <LinearGradient
+                        start={{ x: 0.0, y: 0.25 }}
+                        end={{ x: 0.25, y: 1.0 }}
+                        locations={[0, 0.5]}
+                        colors={['#2c639e', '#053645']}
+                        style={styles.linearGradient}
+                    >
+                        <Item button onPress={this.singOut}>
+                            <Text button style={styles.singOut}
+                            >Logout</Text>
+                            <Right>
+                                <Icon style={styles.singOutIcon} name="exit" size={16} />
+                            </Right>
+                        </Item>
+                    </LinearGradient>
                 </View>
-            </View>
+            </Container>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 20,
+    singOutIcon: {
+        alignSelf: 'flex-end',
+        color: 'white'
+    },
+    singOutContent: {
+
+    },
+    singOut: {
+        //backgroundColor: '#7efb7b',
+        fontSize: 14,
+        fontFamily: 'Gill Sans',
+        textAlign: 'center',
+        alignSelf: 'center',
+        margin: 1,
+        color: '#ffffff',
+        backgroundColor: 'transparent'
+    },
+    linearGradient: {
         flex: 1,
-        backgroundColor: '#f2fff2'
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
-    footerContainer: {
-        padding: 15,
-        marginBottom: 40,
-    },
-    footerText: {
-        fontSize: 18,
-    },
-    singOut:{
-        color: '#fff',
+    footer: {
+        width: 150,
+        height: 24,
+        position: 'absolute',
+        bottom: 10,
+        left: 50
     }
 });
-
 export default SideMenu;

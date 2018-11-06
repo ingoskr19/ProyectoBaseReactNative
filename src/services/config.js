@@ -11,3 +11,5 @@ export const HTTP_PRODUCT = {
     getCatalog: '/products',
     getProduct: '/products/' //id
 }
+
+export const BASE_IMAGE = 'https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg';

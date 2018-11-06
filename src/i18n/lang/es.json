@@ -1,8 +1,7 @@
 {
     "A":"A",
 
-
     "F":"F",
-    "FOLLOWERS": "Followers",
-    "FOLLOWINGS": "Followings"
+    "FOLLOWERS": "Seguidores",
+    "FOLLOWINGS": "Siguiendo"
 }

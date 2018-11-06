@@ -1,51 +1,35 @@
 import React, { Component } from 'react';
-import {
-    Platform,
-    ToastAndroid,
-    View
-  } from 'react-native';
+import { Platform, ToastAndroid, View, ActivityIndicator, AsyncStorage } from 'react-native';
 
-import ProfileOverview from './components/profile-overview';
 import FollowOverview from './components/follow-overview';
 import FormOverview from './components/form-overview';
 import httpUsers from '../../services/Users/http-users';
+import HeaderMenu from '../Components/Menu/header-menu';
+import HeaderComponent from '../Components/Header/header';
 
 class Profile extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            profile: {}
+            profile: null,
+            title: 'Profile'
         }
     }
 
     componentDidMount() {
-        /*const profile = {
-            name: 'Oscar Vergara',
-            location: 'Monteria, Córdoba',
-            uri: 'https://carfromjapan.com/wp-content/uploads/2018/05/bmw.jpg',
-            followers: 253,
-            following: 4323,
-            phone: '+573126209223',
-            twitters: '@oscar_vergara'
-        };*/
-        this.getUsers();
         this.getUserByToken();
-        /*this.setState({
-            profile
-        });*/
-    }
-
-    async getUsers(){
-        const data = await httpUsers.getUsers();
-        console.log(data);
     }
 
     async getUserByToken(){
-        console.log("Consultara usuario por token");
-        const data = await httpUsers.getUserByToken();
-        console.log("Resultado....");
-        console.log(data);
+        const token = await AsyncStorage.getItem('token');
+        const data = await httpUsers.getUserByToken(token);
+        this.setState({
+            profile: data,
+        });
+
+        this.navigationOptions.headerTitle = 'Profile - '+this.state.profile.name;
+        this.props.navigation.setParams({ name });
     }
 
 
@@ -68,16 +52,23 @@ class Profile extends Component {
         this.setState({ ...this.state.profile, name: text });
     }
 
-    static navigationOptions = {
-        title: 'View Profile',
+    static navigationOptions = ({ navigation }) => {
+        return {
+            header: (props) => (
+                <HeaderComponent title="Profile" navigation={navigation}
+                    hasBackButton={props.navigation.state.routes.length > 1}
+                />
+            )
+        }
     }
 
     render() {
-        return (
+        return (this.state.profile) ?
+         (
             <View>
-                <ProfileOverview profile={this.state.profile} />
+                <HeaderMenu user={this.state.profile} />
 
-                <FollowOverview following={this.state.profile.following} followers={this.state.profile.followers} />
+                <FollowOverview {...this.state.profile} />
 
                 <FormOverview
                     onPress={this.showAlert}
@@ -86,7 +77,10 @@ class Profile extends Component {
                     navigation={this.props.navigation}
                 />
             </View>
-        );
+        )
+        :
+        <ActivityIndicator size="large" color="#7efb7b" size={24} />
+        ;
     }
 }
 
