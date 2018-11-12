@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {Text, StyleSheet, Image, ActivityIndicator} from 'react-native';
 import ItemProduct from './components/item-product';
 import httpProducts from '../../services/Products/http-products';
-import { List, ListItem, Left, Right, Content, Textarea, Card, CardItem, Body, Icon } from 'native-base';
+import { List, ListItem } from 'native-base';
+import HeaderComponent from '../Components/Header/header';
+import ShoppingCarIcon from '../Components/Header/shoping-car-icon';
 
 class Catalog extends Component {
     constructor(props) {
@@ -16,15 +18,17 @@ class Catalog extends Component {
         this.getData()
     }
 
-    navigatorButtons = {
-        rightButtons: [
-            {
-                icon: require('../../img/cart.png'),
-                id: 'cart',
-                title: 'Cart'
-            }
-        ]
-    }
+    static navigationOptions = ({ navigation }) => ({
+        header: (props) => {
+            return (
+                <HeaderComponent title="Catalog" navigation={navigation}
+                    hasBackButton={props.navigation.state.routes.length > 1}
+                >
+                    <ShoppingCarIcon/>   
+                </HeaderComponent>
+            )
+        }
+    });
 
     async getData() {
         const data = await httpProducts.getProducts();
@@ -40,8 +44,8 @@ class Catalog extends Component {
                 renderRow={item => {
                     return (
                         <ListItem>
-                            {this.itemProduct(item)}
-                            <ItemProduct product={item} navigation={this.props.navigation}/>
+                            <ItemProduct product={item} navigation={this.props.navigation} 
+                            favoritePress={this.favoritePress}/>
                         </ListItem>
                     );
                 }}
@@ -51,8 +55,8 @@ class Catalog extends Component {
         }
     }
 
-    itemProduct = (product) => {   
-        <ItemProduct product={product} navigation={this.props.navigation}/>;
+    favoritePress = (product) => {   
+        console.log('favorite::: '+product._id);
     };
 
 }

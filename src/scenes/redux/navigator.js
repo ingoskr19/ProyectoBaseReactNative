@@ -4,11 +4,13 @@ import HomeScreen from './home-screen';
 import ShoesScreen from './components/shoes-screen';
 import TechnologyScreen from './components/technology-screen';
 import ShoppingCarIcon from './components/shoping-car-icon';
+import cartScreen from './components/cart-screen';
 
 export const AppStackNavigator = createStackNavigator({
     Home: {screen: HomeScreen},
     Shoes: {screen:ShoesScreen},
-    Tecnology: {screen:TechnologyScreen}
+    Technology: {screen:TechnologyScreen},
+    Cart: cartScreen
 }, {
     initialRouteName: 'Home' ,
     navigationOptions: {

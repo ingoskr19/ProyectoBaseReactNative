@@ -1,44 +1,46 @@
 import React from 'react';
-import { StyleSheet, Image, View } from 'react-native';
-import { Left, Right, Content, Textarea, Card, CardItem, Body, Text, Container, Item } from 'native-base';
+import { StyleSheet, Image, TouchableHighlight } from 'react-native';
+import { Left, Right, Content, Card, CardItem, Text, Icon} from 'native-base';
+import Button from '../../Camera/components/button-component';
 renderImage = (image) => {
     if (image != "" && image != null) {
-        return (<Image source={{ uri: image }} style={styles.productImage} />);
+        return (
+            <Left>
+                <Image source={{ uri: image }} style={styles.productImage} />
+            </Left>
+        );
     } else {
-        <Image source={require('./../../../../assets/images/NoImage.png')} style={styles.productImage} />
+            <Left>
+                <Image source={require('./../../../../assets/images/NoImage.png')} style={styles.productImage} />
+            </Left>
     }
-}
-
-onPress = (props) => {
-    console.log("eentro aqui::");
-    console.log(props.product);
-    props.navigation.navigate('ProductDetailScreen', { _id: props.product._id });
 }
 const ItemProduct = (props) => {
     return (
-        <Content>
+        <Content style={styles.container}>
             <Card>
                 <CardItem header>
                     <Text style={styles.productName}>{props.product.name}</Text>
                 </CardItem>
-                <CardItem>
-                    <Body>
-                        <View style={styles.bodyContent}>
-                            <Left>
-                                {renderImage(props.product.avatar)}
-                            </Left>
-                            <Text style={styles.productDescription}>
-                                {props.product.description}
-                            </Text>
-                        </View>
-                    </Body>
-                </CardItem>
+                <TouchableHighlight onPress={() => props.navigation.navigate('ProductDetailScreen', { product: props.product })}
+                    underlayColor='#626663'>
+                    <CardItem>
+                        {renderImage(props.product.avatar)}
+                        <Text>{props.product.description}</Text>
+                    </CardItem>
+                </TouchableHighlight>
                 <CardItem footer>
                     <Left>
                         <Text style={styles.productPrice}>${props.product.price}</Text>
                     </Left>
                     <Right>
-                        <Text>{props.product.favorite}</Text>
+                    <TouchableHighlight onPress={()=>props.favoritePress(props.product)}>
+                        { (props.product.favorite) ? 
+                            <Icon name='ios-hand'></Icon>
+                            :
+                            <Icon name='heart' size={16}></Icon>
+                        }
+                    </TouchableHighlight>
                     </Right>
                 </CardItem>
             </Card>
@@ -47,6 +49,9 @@ const ItemProduct = (props) => {
 };
 
 const styles = StyleSheet.create({
+    container:{
+        padding: 0
+    },
     productName: {
         backgroundColor: '#fff',
         fontSize: 12,
@@ -54,13 +59,16 @@ const styles = StyleSheet.create({
     productImage: {
         width: 70,
         height: 70,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        borderWidth: 1,
+        borderColor: 'red'
     },
     bodyContent: {
         flexDirection: 'row',
     },
     productDescription: {
-        fontSize: 12
+        fontSize: 12,
+        textAlign: 'justify'
     },
     productPrice: {
         fontSize: 14,

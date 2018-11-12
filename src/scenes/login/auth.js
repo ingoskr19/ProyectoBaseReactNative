@@ -70,7 +70,7 @@ class Auth extends Component {
                         colors={['#2c639e', '#053645']}
                         style={styles.linearGradient}
                         >
-                        <Text style={styles.login} onPress={this.login}>GO</Text>                   
+                        <Text style={styles.login} onPress={this.login}>Go</Text>                   
                     </LinearGradient>
                 </View>
             </ImageBackground>
@@ -93,21 +93,27 @@ const styles = StyleSheet.create({
     formInput: {
         width: 250,
         color: '#7efb7b',
+        borderWidth: 1,
+        borderColor: 'white',
+        height: 30,
+        paddingBottom: 2,
+        marginBottom: 5
     },
     login: {
         //backgroundColor: '#7efb7b',
         fontSize: 18,
         fontFamily: 'Gill Sans',
         textAlign: 'center',
-        margin: 5,
+        margin: 2,
         color: '#ffffff',
         backgroundColor: 'transparent',
-        borderRadius: 5
+        borderRadius: 5,
     },
     linearGradient: {
         paddingLeft: 15,
         paddingRight: 15,
-        borderRadius: 5
+        borderRadius: 5,
+        marginTop: 5,
       },
 
 });

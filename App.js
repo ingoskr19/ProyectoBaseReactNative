@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  ToastAndroid
-} from 'react-native';
 import {Splash} from './src/navigation/navigator';
 import RNLanguage from 'react-native-languages';
 import i18n from './src/i18n';
-//import AppNavigator from './navigation';
+import store from './src/redux/store';
+import {Provider} from 'react-redux';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -29,7 +26,9 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-      <Splash/>
+      <Provider store={store}>
+        <Splash/>
+      </Provider>
     );
   }
 }

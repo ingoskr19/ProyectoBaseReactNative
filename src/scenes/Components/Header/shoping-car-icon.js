@@ -6,7 +6,7 @@ import { Icon } from 'native-base';
 const ShoppingCarIcon = props => {
     return (
     <View style={styles.container}>
-        <Icon name="cart" size={30} onPress={()=>props.navigation.navigate('Cart')}/>
+        <Icon name="cart" style={styles.icon} size={30} onPress={()=>props.navigation.navigate('Cart')}/>
         <View style={styles.badget}>
             <Text style={styles.badgetText}>{props.cartItems.length}</Text>
         </View>
@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
     container: {
         padding: 10,
         flex: 1
+    },
+    icon: {
+        color: '#ffffff80'
     },
     badget: {
         position: 'absolute',

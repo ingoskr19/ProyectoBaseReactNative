@@ -99,25 +99,8 @@ import DevicesScene from '../scenes/Devices';
     header: null
   }
   },
-  CatalogScreen: {
-    screen: Catalog,
-    navigationOptions: () => ({
-      title: 'Catalog'
-    }),
-    headerTitleStyle: {
-      fontSize: 26,
-    }
-  },
-
-  ProductDetailScreen: {
-    screen: ProductDetail,
-    navigationOptions: () => ({
-      title: 'Product Detail'
-    }),
-    headerTitleStyle: {
-      fontSize: 26,
-    }
-  },
+  CatalogScreen: Catalog,
+  ProductDetailScreen: ProductDetail,
 
   PurchaseSummaryScreen: {
     screen: PurchaseSummary,
